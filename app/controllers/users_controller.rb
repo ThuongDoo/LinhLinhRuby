@@ -9,7 +9,10 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path
     else
-      render :new
+      if params[:user][:password] != params[:user][:password_confirmation]
+        flash[:alert] = "Password confirmation doesn't match Password"
+      end
+      redirect_to new_user_path
     end
   end
 
